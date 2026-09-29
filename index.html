@@ -3,100 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GhofDomainku - Platform Custom Domain & AI Tools</title>
+    <title>GhofDomainku - Custom Domain & AI Tools</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
+    <!-- Header Navbar -->
     <header>
         <div class="logo">🌐 GhofDomainku</div>
-        <nav>
-            <button class="btn" onclick="openAuthModal()">Login / Daftar</button>
-            <button class="btn" id="installBtn" style="display:none; background:#10b981; margin-left: 10px;" onclick="installApp()">📥 Download App</button>
-        </nav>
+        <div id="navAuth">
+            <button class="btn" onclick="openModal('authModal')">Login / Daftar</button>
+            <button class="btn" style="background: #10b981; margin-left: 8px;" onclick="openAdminLogin()">Admin</button>
+        </div>
+        <div id="navUser" style="display:none; align-items: center; gap: 10px;">
+            <span id="userEmailDisplay" style="font-size: 13px; color: var(--text-muted);"></span>
+            <button class="btn" style="background: #ef4444; padding: 6px 12px;" onclick="logout()">Logout</button>
+        </div>
     </header>
 
-    <!-- Hero Section -->
-    <section style="text-align: center; padding: 60px 20px;" class="floating">
-        <h1 style="font-size: 3rem; margin-bottom: 20px;">Ubah Web Lain Jadi <span style="color: #6366f1;">Custom Domainmu Sendiri!</span></h1>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Ubah platform seperti Base44, AI Studio, dan web app lainnya dengan mudah menggunakan domain pilihanmu sendiri. Cepat, aman, dan tanpa ribet.</p>
-        
-        <!-- Statistik Dinamis -->
-        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 30px;">
-            <div class="glow-card" style="padding: 20px 40px;">
-                <h3 id="statRating" style="font-size: 2rem; color: #fbbf24;">⭐ 4.9/5.0</h3>
-                <p style="color: var(--text-muted); font-size: 14px;">Rating Aplikasi</p>
-            </div>
-            <div class="glow-card" style="padding: 20px 40px;">
-                <h3 id="statUsers" style="font-size: 2rem; color: #10b981;">12,450+</h3>
-                <p style="color: var(--text-muted); font-size: 14px;">Pengguna Aktif</p>
-            </div>
-        </div>
-    </section>
+    <div class="container">
 
-    <!-- Pilihan Paket & Harga -->
-    <h2 style="text-align: center; margin-top: 20px;">Pilihan Paket & Harga Terbaik</h2>
-    <div class="pricing-grid">
-        <div class="price-card">
-            <h3>Plus</h3>
-            <h2 style="color: var(--primary); margin: 15px 0;">Rp 45.000</h2>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Cocok untuk pemula yang ingin mulai custom 1 domain dasar dengan kecepatan stabil.</p>
-            <button class="btn" onclick="selectPackage('Plus', 45000)">Pilih Paket</button>
+        <!-- HALAMAN UTAMA / LANDING PAGE -->
+        <div id="pageHome">
+            <section class="hero floating">
+                <h1>Ubah Web Lain Jadi <span style="color: #6366f1;">Custom Domainmu Sendiri!</span></h1>
+                <p>Ubah platform seperti Base44, AI Studio, dan web app lainnya dengan mudah menggunakan domain pilihanmu sendiri. Cepat, aman, dan tanpa ribet.</p>
+                
+                <!-- Statistik -->
+                <div class="stats-container">
+                    <div class="glow-card stat-box">
+                        <h3 id="displayRating" style="font-size: 1.8rem; color: #fbbf24;">⭐ 4.9/5.0</h3>
+                        <p style="color: var(--text-muted); font-size: 12px;">Rating Aplikasi</p>
+                    </div>
+                    <div class="glow-card stat-box">
+                        <h3 id="displayUsers" style="font-size: 1.8rem; color: #10b981;">12,450+</h3>
+                        <p style="color: var(--text-muted); font-size: 12px;">Pengguna Aktif</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bagian Dashboard User (Muncul Setelah Login) -->
+            <div id="userDashboardSection" style="display:none; margin-bottom: 40px;">
+                <div class="glow-card" style="padding: 25px;">
+                    <h2>🛠️ Panel Custom Domain</h2>
+                    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Hubungkan URL web lain dengan domain pilihanmu.</p>
+                    
+                    <input type="text" id="targetUrl" placeholder="URL Web Asal (Cth: https://aistudio.google.com)">
+                    <input type="text" id="customDomainInput" placeholder="Domain Kamu (Cth: appku.com)">
+                    <button class="btn" onclick="saveCustomDomain()">Aktifkan Custom Domain</button>
+                    
+                    <div id="domainList" style="margin-top: 15px;"></div>
+                </div>
+            </div>
+
+            <!-- Pilihan Paket & Harga -->
+            <h2 style="text-align: center; margin-top: 20px;">Pilihan Paket & Harga Terbaik</h2>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <h3>Plus</h3>
+                    <h2 style="color: var(--primary); margin: 10px 0;">Rp 45.000</h2>
+                    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Cocok untuk pemula yang ingin mulai custom 1 domain dasar dengan kecepatan stabil.</p>
+                    <button class="btn" onclick="selectPackage('Plus', 45000)">Pilih Paket</button>
+                </div>
+                <div class="price-card" style="border-color: var(--primary);">
+                    <h3>Diamond</h3>
+                    <h2 style="color: var(--accent); margin: 10px 0;">Rp 90.000</h2>
+                    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Akses menengah dengan kuota lebih besar, cocok untuk portofolio dan web AI studio.</p>
+                    <button class="btn" onclick="selectPackage('Diamond', 90000)">Pilih Paket</button>
+                </div>
+                <div class="price-card">
+                    <h3>Pro</h3>
+                    <h2 style="color: #38bdf8; margin: 10px 0;">Rp 135.000</h2>
+                    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Fitur profesional untuk kebutuhan redirect web skala menengah dan performa tinggi.</p>
+                    <button class="btn" onclick="selectPackage('Pro', 135000)">Pilih Paket</button>
+                </div>
+                <div class="price-card glow-card">
+                    <h3>Pro Max</h3>
+                    <h2 style="color: #f43f5e; margin: 10px 0;">Rp 599.999</h2>
+                    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Akses VIP tanpa batas, fitur custom domain unlimited, prioritas support penuh.</p>
+                    <button class="btn" onclick="selectPackage('Pro Max', 599999)">Pilih Paket</button>
+                </div>
+            </div>
         </div>
-        <div class="price-card" style="border-color: var(--primary);">
-            <h3>Diamond</h3>
-            <h2 style="color: var(--accent); margin: 15px 0;">Rp 90.000</h2>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Akses menengah dengan kuota lebih besar, cocok untuk portofolio dan web AI studio.</p>
-            <button class="btn" onclick="selectPackage('Diamond', 90000)">Pilih Paket</button>
+
+        <!-- HALAMAN ADMIN PANEL (Khusus anakbahasainternational@gmail.com) -->
+        <div id="pageAdmin" style="display:none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1>👑 Admin Panel GhofDomainku</h1>
+                <button class="btn" style="background: #334155;" onclick="backToHome()">Kembali ke Home</button>
+            </div>
+            
+            <div class="glow-card" style="padding: 25px; margin-bottom: 20px;">
+                <h3>📊 Pengaturan Statistik Home</h3>
+                <label>Ubah Rating Web:</label>
+                <input type="text" id="inputRating" value="4.9/5.0">
+                <label>Ubah Jumlah Pengguna Aktif:</label>
+                <input type="text" id="inputUsers" value="12,450+">
+                <button class="btn" onclick="updateAdminStats()">Simpan Statistik</button>
+            </div>
+
+            <div class="glow-card" style="padding: 25px;">
+                <h3>💳 Metode Pembayaran</h3>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 10px;">Nomor DANA & ShopeePay saat ini: <b>08979517541</b></p>
+                <label>Ubah Nomor Pembayaran:</label>
+                <input type="text" id="inputPayNum" value="08979517541">
+                <button class="btn" onclick="updateAdminPay()">Simpan Nomor</button>
+            </div>
         </div>
-        <div class="price-card">
-            <h3>Pro</h3>
-            <h2 style="color: #38bdf8; margin: 15px 0;">Rp 135.000</h2>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Fitur profesional untuk kebutuhan redirect web skala menengah dan performa tinggi.</p>
-            <button class="btn" onclick="selectPackage('Pro', 135000)">Pilih Paket</button>
-        </div>
-        <div class="price-card glow-card">
-            <h3>Pro Max</h3>
-            <h2 style="color: #f43f5e; margin: 15px 0;">Rp 599.999</h2>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Akses VIP tanpa batas, fitur custom domain unlimited, prioritas support penuh.</p>
-            <button class="btn" onclick="selectPackage('Pro Max', 599999)">Pilih Paket</button>
-        </div>
+
     </div>
 
-    <!-- Modal Login / Register -->
+    <!-- MODAL LOGIN / REGISTER -->
     <div id="authModal" class="modal">
         <div class="modal-content">
-            <h2>Masuk / Daftar Akun</h2>
-            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Masukkan Gmail aktif Anda untuk mulai menggunakan GhofDomainku.</p>
-            <input type="email" id="userEmail" placeholder="nama@gmail.com">
-            <input type="password" id="userPass" placeholder="Password akun">
-            <button class="btn" style="width: 100%; margin-top: 10px;" onclick="handleLogin()">Masuk / Daftar</button>
-            <button class="btn" style="width: 100%; margin-top: 10px; background: #334155;" onclick="closeAuthModal()">Tutup</button>
+            <h2>Masuk / Daftar</h2>
+            <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 15px;">Masukkan Gmail Anda untuk mulai.</p>
+            <input type="email" id="userEmailInput" placeholder="nama@gmail.com">
+            <button class="btn" style="width: 100%;" onclick="handleLogin()">Masuk / Daftar</button>
+            <button class="btn" style="width: 100%; margin-top: 10px; background: #334155;" onclick="closeModal('authModal')">Tutup</button>
         </div>
     </div>
 
-    <!-- Modal Checkout Pembayaran -->
+    <!-- MODAL CHECKOUT PEMBAYARAN -->
     <div id="checkoutModal" class="modal">
         <div class="modal-content">
-            <h2>Checkout Pembayaran</h2>
-            <p id="summaryPackage" style="margin: 10px 0; color: #10b981; font-weight: bold;"></p>
+            <h2>Konfirmasi Pembayaran</h2>
+            <p id="summaryText" style="margin: 10px 0; color: #10b981; font-weight: bold; font-size: 14px;"></p>
             
             <label>Pilih Metode Pembayaran:</label>
-            <select id="paymentMethod" onchange="showPaymentInfo()">
+            <select id="selectedMethod">
                 <option value="dana">DANA (08979517541)</option>
                 <option value="shopeepay">ShopeePay (08979517541)</option>
             </select>
 
-            <div id="paymentInstructions" style="background: #1e293b; padding: 15px; border-radius: 10px; margin: 15px 0; font-size: 14px;">
-                Transfer manual ke nomor: <b>08979517541</b> atas nama Admin GhofDomainku.
+            <div style="background: #1e293b; padding: 12px; border-radius: 8px; margin: 10px 0; font-size: 13px; color: var(--text-muted);">
+                Silakan transfer manual sesuai harga paket ke nomor <b style="color:white;">08979517541</b>. Lalu klik konfirmasi di bawah.
             </div>
 
             <button class="btn" style="width: 100%;" onclick="submitOrder()">Bayar Sekarang & Konfirmasi</button>
-            <button class="btn" style="width: 100%; margin-top: 10px; background: #334155;" onclick="closeCheckout()">Batal</button>
+            <button class="btn" style="width: 100%; margin-top: 10px; background: #334155;" onclick="closeModal('checkoutModal')">Batal</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Cek Session Saat Dibuka
+        window.onload = function() {
+            checkAuthUI();
+            loadSettings();
+            loadDomains();
+        };
+
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        function handleLogin() {
+            const email = document.getElementById('userEmailInput').value;
+            if(!email) { alert('Masukkan email terlebih dahulu!'); return; }
+            
+            localStorage.setItem('ghof_user', email);
+            closeModal('authModal');
+            checkAuthUI();
+            alert('Login Berhasil!');
+        }
+
+        function logout() {
+            localStorage.removeItem('ghof_user');
+            checkAuthUI();
+            window.location.reload();
+        }
+
+        function checkAuthUI() {
+            const user = localStorage.getItem('ghof_user');
+            if(user) {
+                document.getElementById('navAuth').style.display = 'none';
+                document.getElementById('navUser').style.display = 'flex';
+                document.getElementById('userEmailDisplay').innerText = user;
+                document.getElementById('userDashboardSection').style.display = 'block';
+            } else {
+                document.getElementById('navAuth').style.display = 'block';
+                document.getElementById('navUser').style.display = 'none';
+                document.getElementById('userDashboardSection').style.display = 'none';
+            }
+        }
+
+        // Checkout Alur
+        let activePkg = '';
+        let activePrice = 0;
+
+        function selectPackage(pkg, price) {
+            const user = localStorage.getItem('ghof_user');
+            if(!user) {
+                alert('Silakan Login/Daftar terlebih dahulu untuk membeli paket!');
+                openModal('authModal');
+                return;
+            }
+            activePkg = pkg;
+            activePrice = price;
+            document.getElementById('summaryText').innerText = `Paket: ${pkg} - Rp ${price.toLocaleString()}`;
+            openModal('checkoutModal');
+        }
+
+        function submitOrder() {
+            const method = document.getElementById('selectedMethod').value;
+            alert(`Pesanan Paket ${activePkg} berhasil dicatat!\nSilakan transfer Rp ${activePrice.toLocaleString()} via ${method.toUpperCase()} ke nomor: 08979517541.\n\nTunggu verifikasi dari admin (anakbahasainternational@gmail.com).`);
+            closeModal('checkoutModal');
+        }
+
+        // Custom Domain Logic
+        function saveCustomDomain() {
+            const target = document.getElementById('targetUrl').value;
+            const custom = document.getElementById('customDomainInput').value;
+            if(!target || !custom) { alert('Harap isi URL target dan custom domain!'); return; }
+
+            let list = JSON.parse(localStorage.getItem('ghof_custom_list') || '[]');
+            list.push({ target, custom });
+            localStorage.setItem('ghof_custom_list', JSON.stringify(list));
+            
+            document.getElementById('targetUrl').value = '';
+            document.getElementById('customDomainInput').value = '';
+            loadDomains();
+            alert('Custom Domain berhasil diaktifkan!');
+        }
+
+        function loadDomains() {
+            const container = document.getElementById('domainList');
+            if(!container) return;
+            let list = JSON.parse(localStorage.getItem('ghof_custom_list') || '[]');
+            container.innerHTML = list.map(item => `
+                <div style="background:#1e293b; padding:10px 15px; border-radius:8px; margin-top:8px; font-size:13px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>🌐 <b>${item.custom}</b> ➔ ${item.target}</span>
+                </div>
+            `).join('');
+        }
+
+        // Admin Panel Logic
+        function openAdminLogin() {
+            let email = prompt('Masukkan Email Khusus Admin:');
+            if(email === 'anakbahasainternational@gmail.com') {
+                document.getElementById('pageHome').style.display = 'none';
+                document.getElementById('pageAdmin').style.display = 'block';
+            } else if(email !== null) {
+                alert('Akses Ditolak! Hanya anakbahasainternational@gmail.com.');
+            }
+        }
+
+        function backToHome() {
+            document.getElementById('pageAdmin').style.display = 'none';
+            document.getElementById('pageHome').style.display = 'block';
+        }
+
+        function updateAdminStats() {
+            let r = document.getElementById('inputRating').value;
+            let u = document.getElementById('inputUsers').value;
+            localStorage.setItem('ghof_rating', r);
+            localStorage.setItem('ghof_users', u);
+            loadSettings();
+            alert('Statistik berhasil diperbarui!');
+        }
+
+        function updateAdminPay() {
+            let p = document.getElementById('inputPayNum').value;
+            localStorage.setItem('ghof_pay', p);
+            alert('Nomor pembayaran berhasil diperbarui!');
+        }
+
+        function loadSettings() {
+            if(localStorage.getItem('ghof_rating')) {
+                document.getElementById('displayRating').innerText = "⭐ " + localStorage.getItem('ghof_rating');
+                document.getElementById('inputRating').value = localStorage.getItem('ghof_rating');
+            }
+            if(localStorage.getItem('ghof_users')) {
+                document.getElementById('displayUsers').innerText = localStorage.getItem('ghof_users');
+                document.getElementById('inputUsers').value = localStorage.getItem('ghof_users');
+            }
+        }
+    </script>
 </body>
 </html>
