@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhofDomainku - Platform Custom Domain & AI Tools</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+    <header>
+        <div class="logo">🌐 GhofDomainku</div>
+        <nav>
+            <button class="btn" onclick="openAuthModal()">Login / Daftar</button>
+            <button class="btn" id="installBtn" style="display:none; background:#10b981; margin-left: 10px;" onclick="installApp()">📥 Download App</button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section style="text-align: center; padding: 60px 20px;" class="floating">
+        <h1 style="font-size: 3rem; margin-bottom: 20px;">Ubah Web Lain Jadi <span style="color: #6366f1;">Custom Domainmu Sendiri!</span></h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Ubah platform seperti Base44, AI Studio, dan web app lainnya dengan mudah menggunakan domain pilihanmu sendiri. Cepat, aman, dan tanpa ribet.</p>
+        
+        <!-- Statistik Dinamis -->
+        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 30px;">
+            <div class="glow-card" style="padding: 20px 40px;">
+                <h3 id="statRating" style="font-size: 2rem; color: #fbbf24;">⭐ 4.9/5.0</h3>
+                <p style="color: var(--text-muted); font-size: 14px;">Rating Aplikasi</p>
+            </div>
+            <div class="glow-card" style="padding: 20px 40px;">
+                <h3 id="statUsers" style="font-size: 2rem; color: #10b981;">12,450+</h3>
+                <p style="color: var(--text-muted); font-size: 14px;">Pengguna Aktif</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pilihan Paket & Harga -->
+    <h2 style="text-align: center; margin-top: 20px;">Pilihan Paket & Harga Terbaik</h2>
+    <div class="pricing-grid">
+        <div class="price-card">
+            <h3>Plus</h3>
+            <h2 style="color: var(--primary); margin: 15px 0;">Rp 45.000</h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Cocok untuk pemula yang ingin mulai custom 1 domain dasar dengan kecepatan stabil.</p>
+            <button class="btn" onclick="selectPackage('Plus', 45000)">Pilih Paket</button>
+        </div>
+        <div class="price-card" style="border-color: var(--primary);">
+            <h3>Diamond</h3>
+            <h2 style="color: var(--accent); margin: 15px 0;">Rp 90.000</h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Akses menengah dengan kuota lebih besar, cocok untuk portofolio dan web AI studio.</p>
+            <button class="btn" onclick="selectPackage('Diamond', 90000)">Pilih Paket</button>
+        </div>
+        <div class="price-card">
+            <h3>Pro</h3>
+            <h2 style="color: #38bdf8; margin: 15px 0;">Rp 135.000</h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Fitur profesional untuk kebutuhan redirect web skala menengah dan performa tinggi.</p>
+            <button class="btn" onclick="selectPackage('Pro', 135000)">Pilih Paket</button>
+        </div>
+        <div class="price-card glow-card">
+            <h3>Pro Max</h3>
+            <h2 style="color: #f43f5e; margin: 15px 0;">Rp 599.999</h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Akses VIP tanpa batas, fitur custom domain unlimited, prioritas support penuh.</p>
+            <button class="btn" onclick="selectPackage('Pro Max', 599999)">Pilih Paket</button>
+        </div>
+    </div>
+
+    <!-- Modal Login / Register -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <h2>Masuk / Daftar Akun</h2>
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Masukkan Gmail aktif Anda untuk mulai menggunakan GhofDomainku.</p>
+            <input type="email" id="userEmail" placeholder="nama@gmail.com">
+            <input type="password" id="userPass" placeholder="Password akun">
+            <button class="btn" style="width: 100%; margin-top: 10px;" onclick="handleLogin()">Masuk / Daftar</button>
+            <button class="btn" style="width: 100%; margin-top: 10px; background: #334155;" onclick="closeAuthModal()">Tutup</button>
+        </div>
+    </div>
+
+    <!-- Modal Checkout Pembayaran -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <h2>Checkout Pembayaran</h2>
+            <p id="summaryPackage" style="margin: 10px 0; color: #10b981; font-weight: bold;"></p>
+            
+            <label>Pilih Metode Pembayaran:</label>
+            <select id="paymentMethod" onchange="showPaymentInfo()">
+                <option value="dana">DANA (08979517541)</option>
+                <option value="shopeepay">ShopeePay (08979517541)</option>
+            </select>
+
+            <div id="paymentInstructions" style="background: #1e293b; padding: 15px; border-radius: 10px; margin: 15px 0; font-size: 14px;">
+                Transfer manual ke nomor: <b>08979517541</b> atas nama Admin GhofDomainku.
+            </div>
+
+            <button class="btn" style="width: 100%;" onclick="submitOrder()">Bayar Sekarang & Konfirmasi</button>
+            <button class="btn" style="width: 100%; margin-top: 10px; background: #334155;" onclick="closeCheckout()">Batal</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
