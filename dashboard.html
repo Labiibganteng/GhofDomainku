@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - GhofDomainku</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="padding: 40px 8%;">
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <div>
+            <h1>Dashboard Pengguna</h1>
+            <p id="welcomeUser" style="color: var(--text-muted);"></p>
+        </div>
+        <div>
+            <button class="btn" style="background: #ef4444;" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <!-- Panel Custom Domain (Ubah Base44, AI Studio, dll jadi Domain Sendiri) -->
+    <div class="glow-card" style="padding: 30px; margin-bottom: 30px;">
+        <h2>🛠️ Ubah Web Lain Jadi Custom Domain</h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Masukkan URL web asal (misal: Base44, AI Studio, dll) dan pasangkan dengan domain pilihanmu.</p>
+        
+        <input type="text" id="targetUrl" placeholder="Target URL web lain (Contoh: https://aistudio.google.com atau base44 link)">
+        <input type="text" id="customDomainInput" placeholder="Domain impianmu (Contoh: appku.com)">
+        <button class="btn" onclick="saveCustomDomain()">Aktifkan Custom Domain</button>
+        
+        <div id="domainList" style="margin-top: 20px;"></div>
+    </div>
+
+    <!-- Download Aplikasi PWA -->
+    <div class="glow-card" style="padding: 30px; text-align: center;">
+        <h2>📱 Download Aplikasi GhofDomainku</h2>
+        <p style="color: var(--text-muted); margin: 15px 0;">Pasang web ini langsung sebagai aplikasi di HP atau Laptop Anda agar lebih cepat diakses!</p>
+        <button class="btn" style="background: #10b981;" onclick="installApp()">Install Aplikasi Sekarang</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
